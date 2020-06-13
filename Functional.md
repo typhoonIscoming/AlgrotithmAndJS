@@ -64,7 +64,7 @@ function filter(array, fn) {
     return results
 }
 ```
-
+[高级函数例子](./src/high-order-function.js)
 
 
 
