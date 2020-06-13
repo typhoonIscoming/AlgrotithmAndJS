@@ -66,8 +66,41 @@ function filter(array, fn) {
 ```
 [高级函数例子](./src/high-order-function.js)
 
-
-
+# 函数作为返回值
+- 函数生成一个函数
+```javascript
+function makeFn() {
+    let msg = 'hello function'
+    return function() {
+        console.log(msg)
+    }
+}
+// const fn = makeFn()
+// fn()
+// makeFn()()
+```
+- once函数,对一个函数只执行一次(使用场景如：支付)
+模拟lodash中的once <br>
+```javascript
+function once(fn) {
+    let done = false;
+    return function() {
+        if (!done) {
+            done = true
+            return fn.apply(this, arguments); // 传arguments即是给fn传值
+        }
+    }
+}
+let pay = once(function(money) {
+    console.log(`支付了￥${money}元`)
+})
+pay(5)
+pay(5)
+pay(5)
+```
+# 使用高阶函数的意义
+- 抽象可以帮我们屏蔽细节，只需要关注于我们的目标
+- 高阶函数是用来抽象通用问题
 
 
 
