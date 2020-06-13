@@ -28,7 +28,43 @@ console.log(sum)
 // 函数可以无数次的重用，抽取出来的函数式细粒度的函数，可以组合成更多用途的函数
 ```
 
-# 函数式一等公民(first class Function)
+# 函数式一等公民(First class Function)
+- 函数可以存储在变量中
+- 函数作为参数
+- 函数作为返回值
+
+在JS中，**函数就是一个普通对象**，我们可以把函数存储在变量/数组中，它还可以作为另一个函数的参数或返回值，甚至在运行时通过
+new Function()来构造一个新函数
+```javascript
+// 把函数赋值给变量
+let fn = function() {
+    console.log(12345)
+}
+fn()
+```
+
+# 高阶函数(Higher-order Function)
+- 可以把函数作为参数传给另一个函数
+- 可以把函数作为另一个函数的返回值
+```javascript
+// forEach
+function forEach(array, fn) {
+    for(let i = 0; i < array.length; i++) {
+        fn(array[i])
+    }
+}
+// filter
+function filter(array, fn) {
+    let results = [];
+    for(let i = 0; i < array.length; i++) {
+        if (fn(array[i])) {
+            results.push(array[i])
+        }
+    }
+    return results
+}
+```
+
 
 
 
