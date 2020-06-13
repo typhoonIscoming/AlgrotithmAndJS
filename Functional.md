@@ -102,6 +102,19 @@ pay(5)
 - 抽象可以帮我们屏蔽细节，只需要关注于我们的目标
 - 高阶函数是用来抽象通用问题
 
+# 常用的高阶函数
+- forEach、map、filter、every、some、find/findIndex、reduce、sort
+```javascript
+// every,判断数组中每个元素否满足条件
+const every = (array, fn) => {
+    let result = true
+    for(let value of array) {
+        result = fn(value)
+        if (!result) break;
+    }
+    return result
+}
+```
 
 
 
