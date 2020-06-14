@@ -28,7 +28,7 @@ console.log(sum)
 // 函数可以无数次的重用，抽取出来的函数式细粒度的函数，可以组合成更多用途的函数
 ```
 
-# 函数式一等公民(First class Function)
+# 函数是一等公民(First class Function)
 - 函数可以存储在变量中
 - 函数作为参数
 - 函数作为返回值
@@ -143,8 +143,51 @@ fn()
 - slice返回数组中指定的部分，不改变原数组
 - splice对数组进行操作返回该数组，会改变原数组
 
+# 纯函数的好处
+- 1、可缓存
+   
+   - 因为纯函数对相同的输入有相同的输出，所以可以把纯函数的结果缓存起来
+lodash提供了一个记忆函数memoize<br>
+```javascript
+const _ = require('lodash')
+function getArea(r) {
+    console.log(r)
+    return Math.PI * r * r
+}
+const getAreaWithMemoize = _.memoize(getArea)
+console.log(getAreaWithMemoize(5)) // print -> 5  and result
+console.log(getAreaWithMemoize(5)) // print result
+console.log(getAreaWithMemoize(5)) // print result
+// 只有第一次会打印5，第二、三次不会打印5，因为结果被缓存起来了，直接读缓存值
+```
+- 模拟memoize的实现
+```javascript
+function memoize(fn) { // 需要传递一个函数
+    // 根据相同的输入始终有相同的输出的概念，所以可以把函数fn参数作为对象的键，把函数的结果作为对象的值
+    let cache = {}
+    return function() {
+        let key = JSON.stringify(arguments)
+        cache[key] = cache[key] || fn.apply(fn, arguments)
+        return cache[key]
+    }
+}
+```
+- 2、可测试
+   
+   - 纯函数让测试更方便
+- 3、并行处理
+   
+   - 在多线程环境下并行操作共享的内存数据可能会造成意外情况
+   - 纯函数不需要访问共享的内存数据，所以在并行环境下可以任意运行纯函数(web worker)
 
-
+# 副作用
+如果函数依赖于外部状态就无法保证相同输出，就会带来副作用。<br>
+- 副作用来源
+   
+   - 配置文件
+   - 数据库
+   - 获取用户的输入
+   - ......
 
 
 
