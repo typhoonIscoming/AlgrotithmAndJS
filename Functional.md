@@ -225,7 +225,7 @@ console.log(curried(1, 2, 3)); // print: 6
 console.log(curried(1)(2, 3)); // print: 6
 ```
 
-## lodash科里化的实现
+## 模拟科里化的实现
 ```javascript
 function myCurry(func) {
     return function curried(...args) {
@@ -250,7 +250,7 @@ function myCurry(func) {
 - 管道：
 ----> a ----> Fn ----> b<br>
 给函数Fn输入参数a，返回结果b<br>
-当函数Fn比较复杂时，我么可以把函数Fn拆分成多个小函数，此时多了中间原酸过程的m和n
+当函数Fn比较复杂时，我么可以把函数Fn拆分成多个小函数，此时多了中间原酸过程的m和n<br>
 --------------|---------------------Fn---------------|<br>
 ----> a ----> |---> F3 ---> m ---> F2 ---> n ---> F1 | ----> b<br>
 
@@ -261,7 +261,22 @@ b = Fn(a)<br>
    
    - 函数就像数据管道，函数组合就是把这些管道组合起来，让数据经过多个管道形成最终结果
    - **函数组合默认是从右往左执行。**
-
+模拟函数组合
+```javascript
+function compose(f, g) {
+    return function(value) {
+        return f(g(value))
+    }
+}
+function reverse(array) {
+    return array.reverse()
+}
+function first(array) {
+    return array[0]
+}
+const last = compose(first, reverse)
+console.log(last([1, 3, 5, 7, 9]))
+```
 
 
 

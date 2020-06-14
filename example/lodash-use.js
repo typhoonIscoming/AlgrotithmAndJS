@@ -58,3 +58,22 @@ const getSumWithMycurry = myCurry(getSum)
 console.log(getSumWithMycurry(1, 2, 3))
 console.log(getSumWithMycurry(1)(2, 3))
 console.log(getSumWithMycurry(1, 2)(3))
+
+// 函数组合
+function compose(f, g) {
+    return function(value) {
+        return f(g(value))
+    }
+}
+function reverse(array) {
+    return array.reverse()
+}
+function first(array) {
+    return array[0]
+}
+const last = compose(first, reverse)
+console.log(last([1, 3, 5, 7, 9]))
+
+
+
+
