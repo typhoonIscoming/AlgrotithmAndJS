@@ -5,6 +5,7 @@
 - [科里化](#科里化)
 - [模拟科里化的实现](#模拟科里化的实现)
 - [函数组合(compose)](#函数组合(compose))
+- [组合函数原理模拟](#组合函数原理模拟)
 
 # 函数式编程
 
@@ -286,9 +287,20 @@ const last = compose(first, reverse)
 console.log(last([1, 3, 5, 7, 9]))
 ```
 
+## lodash中的函数组合
+- lodash中的flow()和flowRight()，他们可以组合多个函数
+- flow是从左到右，flowRight是从右到左(使用得更多)
 
-
-
+## 组合函数原理模拟
+```JavaScript
+function compose(...args) {
+    return function(value) {
+        return args.reverse().reduce(function(result, fn) {
+            return fn(result)
+        }, value)
+    }
+}
+```
 
 
 
