@@ -28,6 +28,33 @@ console.log(getAreaWithMemoize(5))
 console.log(getAreaWithMemoize(5))
 console.log(getAreaWithMemoize(5))
 
+// 科里化
+const checkAge = standard => age => age >= standard
+const adult = checkAge(18)
+console.log(adult(20))
+console.log(adult(17))
 
+// lodash中的curry函数
+function getSum(a, b, c) {
+    return a + b + c
+}
+const curried = _.curry(getSum)
+console.log(curried(1, 2, 3)); // print: 6
+console.log(curried(1)(2, 3));
 
+function myCurry(func) {
+    return function curried(...args) {
+        // 判断实参和形参个数
+        if (args.length < func.length) {
+            return function() {
+                return curried(...args.concat(Array.from(arguments)))
+            }
+        }
+        return func(...args)
+    }
+}
 
+const getSumWithMycurry = myCurry(getSum)
+console.log(getSumWithMycurry(1, 2, 3))
+console.log(getSumWithMycurry(1)(2, 3))
+console.log(getSumWithMycurry(1, 2)(3))

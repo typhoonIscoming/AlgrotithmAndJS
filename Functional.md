@@ -190,9 +190,54 @@ function memoize(fn) { // 需要传递一个函数
    - ......
 所有的外部交互都有可能代理副作用，副作用也使得函数通用性下降，不适合扩展和可重用性。同时副作用会给程序带来安全隐患和不确定性，但是副作用不可能完全禁止，尽可能控制他们在可控范围内发生。<br>
 
+# 科里化
+- 使用科里化解决硬编码的问题
+**当一个函数有多个参数的时候，先传递一部分参数调用它(这部分的参数以后永远不会变)，然后返回一个新函数接收剩余参数，返回结果**<br>
+```javascript
+function checkAge(standard, age) {
+    return age >= standard
+}
+// 科里化
+function checkAge(standard) {
+    return function(age) {
+        return age >= standard
+    }
+}
+// 科里化ES6写法
+const checkAge = standard => age => age >= standard
+const adult = checkAge(18)
+console.log(adult(20))
+```
+## lodash中的科里化
 
+- _.curry(func)
+   
+   - 功能：创建一个函数，该函数接收一个或多个func函数的参数，如果func的函数的参数都被提供则执行func并返回执行结果，否则继续返回该函数并等待接收剩余参数
+   - 参数：需要科里化的函数
+   - 返回值：科里化后的函数
+```javascript
+const _ = require('lodash')
+function getSum(a, b, c) {
+    return a + b + c
+}
+const curried = _.curry(getSum)
+console.log(curried(1, 2, 3)); // print: 6
+console.log(curried(1)(2, 3)); // print: 6
+```
 
-
-
+## lodash科里化的实现
+```javascript
+function myCurry(func) {
+    return function curried(...args) {
+        // 判断实参和形参个数
+        if (args.length < func.length) {
+            return function() {
+                return curried(...args.concat(Array.from(arguments)))
+            }
+        }
+        return func(...args)
+    }
+}
+```
 
 
